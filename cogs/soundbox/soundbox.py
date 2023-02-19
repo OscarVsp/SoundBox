@@ -11,7 +11,7 @@ class SoundBox(commands.Cog):
         """Initialize the cog"""
         self.bot: Bot = bot
 
-    @commands.slash_command(name="soundbox")
+    @commands.slash_command(name="soundbox", description="Summone the soundbox")
     async def soundbox(
         self,
         inter: disnake.ApplicationCommandInteraction,
