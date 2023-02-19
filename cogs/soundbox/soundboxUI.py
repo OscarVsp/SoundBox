@@ -22,7 +22,7 @@ class SoundBoxUI(disnake.ui.View):
     def embed(self) -> disnake.Embed:
         return disnake.Embed(
             title="__**Sound Box**__",
-            description=f"Selected sound: {music_list[int(self.music_select.values[0])].name if len(self.music_select.values) > 0 else 'None'}\nSound volume: {int(self.global_volume*100)}%",
+            description=f"""Selected sound: **"{music_list[int(self.music_select.values[0])].name if len(self.music_select.values) > 0 else 'None'}"**\nSound volume: {int(self.global_volume*100)}%""",
             color=disnake.Colour.dark_teal(),
         )
 
@@ -73,23 +73,23 @@ class SoundBoxUI(disnake.ui.View):
         await inter.response.defer()
         await self.play_sound(music_list[int(self.music_select.values[0])], inter)
 
-    @disnake.ui.button(label="Volume Up", emoji="➕", style=disnake.ButtonStyle.primary)
-    async def btn_vol_up(self, button: disnake.Button, inter: disnake.MessageInteraction):
-        await inter.response.defer()
-        self.global_volume += 0.1
-        self.btn_vol_down.disabled = False
-        if self.global_volume >= 1.0:
-            self.global_volume = 1.0
-            button.disabled = True
-        await self.update(inter)
-
-    @disnake.ui.button(label="Volume Down", emoji="➖", style=disnake.ButtonStyle.primary)
+    @disnake.ui.button(emoji="🔉", style=disnake.ButtonStyle.primary)
     async def btn_vol_down(self, button: disnake.Button, inter: disnake.MessageInteraction):
         await inter.response.defer()
         self.global_volume -= 0.1
         self.btn_vol_up.disabled = False
         if self.global_volume <= 0.0:
             self.global_volume = 0.0
+            button.disabled = True
+        await self.update(inter)
+
+    @disnake.ui.button(emoji="🔊", style=disnake.ButtonStyle.primary)
+    async def btn_vol_up(self, button: disnake.Button, inter: disnake.MessageInteraction):
+        await inter.response.defer()
+        self.global_volume += 0.1
+        self.btn_vol_down.disabled = False
+        if self.global_volume >= 1.0:
+            self.global_volume = 1.0
             button.disabled = True
         await self.update(inter)
 
