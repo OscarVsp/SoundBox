@@ -14,6 +14,7 @@ COPY requirements.txt ./
 #RUN pip3 install --extra-index-url https://alpine-wheels.github.io/index --no-cache-dir -r requirements.txt # if wheels dependencies build errors when using alpine
 #RUN pip3 install --no-cache-dir -r requirements.txt    # because PyNaCl wheel build is very very long?
 RUN pip3 install -r requirements.txt
+RUN apt update && apt install ffmpeg -y
 COPY . .
 
 CMD [ "python", "./main.py" ]
